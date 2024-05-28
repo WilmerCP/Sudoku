@@ -89,7 +89,7 @@ public class SudokuFetcher extends SwingWorker<Void,Void> {
 
                 ArrayList<Object> array = (ArrayList<Object>) newboard.get("grids");
 
-                Map<String,Object> sudokuData = (Map<String, Object>) array.getFirst();
+                Map<String,Object> sudokuData = (Map<String, Object>) array.get(0);
 
                 System.out.println(sudokuData.get("difficulty"));
 

@@ -27,6 +27,11 @@ public class MainWindow extends JFrame implements ActionListener{
         title.setFont(new Font("Arial", Font.BOLD, 42));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        //Kullanıcı adı
+        JLabel user = new JLabel("Kullanıcı adı");
+        user.setFont(new Font("Arial", Font.PLAIN, 25));
+        user.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         //Text field for the name of the user
         JTextField nameBox = new JTextField();
         nameBox.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -50,7 +55,9 @@ public class MainWindow extends JFrame implements ActionListener{
 
         this.add(Box.createVerticalGlue());
         this.add(title);
-        this.add(Box.createVerticalStrut(40)); 
+        this.add(Box.createVerticalStrut(40));
+        this.add(user);
+        this.add(Box.createVerticalStrut(20));
         this.add(nameBox);
         this.add(Box.createVerticalStrut(20)); 
         this.add(logButton);

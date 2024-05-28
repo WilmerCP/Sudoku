@@ -14,9 +14,6 @@ import java.util.ArrayList;
 
 public class Cell extends JTextField {
 
-    ArrayList<Cell> column;
-    ArrayList<Cell> row;
-    ArrayList<Cell> box;
     private int correctValue;
     GameWindow window;
 

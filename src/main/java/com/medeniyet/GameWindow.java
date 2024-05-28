@@ -29,6 +29,8 @@ public class GameWindow extends JFrame implements ActionListener {
     JButton eraseButton;
     Timer timer;
 
+    int elapsedSeconds;
+
     GameWindow(MenuWindow previousWindow,int level){
 
         super();
@@ -227,13 +229,16 @@ public class GameWindow extends JFrame implements ActionListener {
 
         if (correct == 81){
 
-            CustomDialog dialog = new CustomDialog(this,"Kazandınız", "Tamam", new MyCallback() {
+            this.timer.stop();
+            int minutes = this.elapsedSeconds/60;
+            int seconds = this.elapsedSeconds%60;
+
+            CustomDialog dialog = new CustomDialog(this,"Tebrikler, "+minutes+":"+seconds+" içinde bitirdiniz", "Tamam", new MyCallback() {
 
                 @Override
                 public void run() {
 
                     menuWindow.display();
-                    GameWindow.this.timer.stop();
                     GameWindow.this.dispose();
 
                 }
@@ -310,11 +315,16 @@ public class GameWindow extends JFrame implements ActionListener {
         Timer timer = new Timer(1000,new ActionListener(){
 
             int remainingSeconds = minutes*60;
+            int elapsedSeconds = 0;
+
 
         @Override
             public void actionPerformed(ActionEvent e){
 
             remainingSeconds--;
+            elapsedSeconds++;
+
+            GameWindow.this.elapsedSeconds = elapsedSeconds;
 
             String min = String.valueOf(remainingSeconds/60);
             String sec = String.valueOf(remainingSeconds%60);

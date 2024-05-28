@@ -15,11 +15,14 @@ public class MenuWindow extends JFrame implements ActionListener {
     JButton easyButton;
     JButton mediumButton;
     JButton hardButton;
+    ImageIcon sudokuIcon;
 
     MenuWindow(String name){
 
         super();
         this.setTitle("Medeniyet Sudoku");
+        sudokuIcon = new ImageIcon("images/favicon.png");
+        this.setIconImage(sudokuIcon.getImage());
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(800,500);
         this.setLocationRelativeTo(null);
@@ -47,6 +50,8 @@ public class MenuWindow extends JFrame implements ActionListener {
         easyButton.setBorder(border);
         easyButton.setFont(new Font("Arial",Font.PLAIN,18));
         easyButton.setFocusable(false);
+        easyButton.setBackground(new Color(17,33,59));
+        easyButton.setForeground(Color.WHITE);
 
         easyButton.addActionListener(this);
         this.easyButton = easyButton;
@@ -57,6 +62,8 @@ public class MenuWindow extends JFrame implements ActionListener {
         mediumButton.setBorder(border);
         mediumButton.setFont(new Font("Arial",Font.PLAIN,18));
         mediumButton.setFocusable(false);
+        mediumButton.setBackground(new Color(17,33,59));
+        mediumButton.setForeground(Color.WHITE);
 
         mediumButton.addActionListener(this);
         this.mediumButton = mediumButton;
@@ -67,6 +74,8 @@ public class MenuWindow extends JFrame implements ActionListener {
         hardButton.setBorder(border);
         hardButton.setFont(new Font("Arial",Font.PLAIN,18));
         hardButton.setFocusable(false);
+        hardButton.setBackground(new Color(17,33,59));
+        hardButton.setForeground(Color.WHITE);
 
         hardButton.addActionListener(this);
         this.hardButton = hardButton;
@@ -77,6 +86,8 @@ public class MenuWindow extends JFrame implements ActionListener {
         backButton.setBorder(border);
         backButton.setFont(new Font("Arial",Font.PLAIN,14));
         backButton.setFocusable(false);
+        backButton.setBackground(new Color(17,33,59));
+        backButton.setForeground(Color.WHITE);
 
         backButton.addActionListener(this);
         this.backButton = backButton;

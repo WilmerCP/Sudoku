@@ -28,6 +28,7 @@ public class GameWindow extends JFrame implements ActionListener {
     Cell focusedCell;
     JButton eraseButton;
     Timer timer;
+    ImageIcon sudokuIcon;
 
     int elapsedSeconds;
 
@@ -36,6 +37,8 @@ public class GameWindow extends JFrame implements ActionListener {
         super();
         getLevel(level);
         this.setTitle("Medeniyet Sudoku");
+        sudokuIcon = new ImageIcon("images/favicon.png");
+        this.setIconImage(sudokuIcon.getImage());
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(900,600);
         this.setLocationRelativeTo(null);

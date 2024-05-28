@@ -1,17 +1,20 @@
 package com.medeniyet;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 //Swing worker class allows us to execute the API calls in a different worker thread
 //This way the Event Dispatcher thread where the GUI is running is not blocked
@@ -24,6 +27,7 @@ public class SudokuFetcher extends SwingWorker<Void,Void> {
     int[] sudokuArray;
     int[] solutionArray;
     GameWindow window;
+    int requestAmount = 0;
 
     SudokuFetcher(String difficulty, GameWindow window){
 
@@ -63,6 +67,13 @@ public class SudokuFetcher extends SwingWorker<Void,Void> {
     private void getSudoku() {
 
         try {
+
+            if (requestAmount > 10){
+
+                throw new IOException("The desired sudoku level was not found");
+
+            }
+
             URI uri = URI.create("https://sudoku-api.vercel.app/api/dosuku");
             URL url = uri.toURL();
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
@@ -95,7 +106,9 @@ public class SudokuFetcher extends SwingWorker<Void,Void> {
 
                 if (!sudokuData.get("difficulty").equals(this.difficulty)){
 
+                    this.requestAmount++;
                     getSudoku();
+
 
                 }else{
 
@@ -114,6 +127,8 @@ public class SudokuFetcher extends SwingWorker<Void,Void> {
         }catch (IOException e){
 
             System.out.println("There was an error while requesting a new sudoku from the API");
+            this.getLocalSudoku();
+
 
         }
 
@@ -159,6 +174,49 @@ public class SudokuFetcher extends SwingWorker<Void,Void> {
 
             this.solution = originalArray;
             this.solutionArray = simpleArray;
+
+        }
+
+    }
+
+    private void getLocalSudoku() {
+
+        try {
+
+            File file = new File(
+                    "localdata/" + this.difficulty + ".txt");
+
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+
+            String text;
+            String buffer = "";
+            while ((text = reader.readLine()) != null) {
+
+                buffer = buffer + text;
+            }
+
+            Gson gson = new Gson();
+            JsonArray jsonArray = gson.fromJson(buffer, JsonArray.class);
+
+            Random random = new Random();
+            int index  = random.nextInt(jsonArray.size());
+
+            JsonObject sudokuData = (JsonObject) jsonArray.get(index);
+
+            // Define the type for the map
+            Type type = new TypeToken<Map<String, Object>>(){}.getType();
+
+            // Convert the JsonObject to a Map<String, Object>
+            Map<String, Object> map = gson.fromJson(sudokuData, type);
+            this.sudokuData = map;
+            getSudokuArray("value");
+            getSudokuArray("solution");
+
+
+        } catch(IOException e){
+
+
+            System.out.println("There was an error while reading from local data");
 
         }
 

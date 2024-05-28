@@ -295,7 +295,7 @@ public class GameWindow extends JFrame implements ActionListener {
 
             case "Easy":
 
-                return 12;
+                return 8;
 
             case "Medium":
 
@@ -304,7 +304,7 @@ public class GameWindow extends JFrame implements ActionListener {
 
             case "Hard":
 
-                return 8;
+                return 15;
 
 
             default:

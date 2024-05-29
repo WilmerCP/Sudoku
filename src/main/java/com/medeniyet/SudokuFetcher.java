@@ -7,10 +7,7 @@ import com.google.gson.reflect.TypeToken;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URL;
@@ -18,16 +15,16 @@ import java.util.*;
 
 //Swing worker class allows us to execute the API calls in a different worker thread
 //This way the Event Dispatcher thread where the GUI is running is not blocked
-public class SudokuFetcher extends SwingWorker<Void,Void> {
+public class SudokuFetcher extends SwingWorker<Void,Void> implements Serializable {
 
-    String difficulty;
-    Map<String,Object> sudokuData;
-    int[][] sudoku;
-    int[][] solution;
-    int[] sudokuArray;
-    int[] solutionArray;
-    GameWindow window;
-    int requestAmount = 0;
+    private String difficulty;
+    private Map<String,Object> sudokuData;
+    private int[][] sudoku;
+    private int[][] solution;
+    private int[] sudokuArray;
+    private int[] solutionArray;
+    private GameWindow window;
+    private int requestAmount = 0;
 
     SudokuFetcher(String difficulty, GameWindow window){
 
@@ -49,15 +46,22 @@ public class SudokuFetcher extends SwingWorker<Void,Void> {
 
         for (int i = 0; i<81;i++){
 
-            window.cells.get(i).setValue(this.sudokuArray[i]);
-            window.cells.get(i).setCorrectValue(this.solutionArray[i]);
-            window.cells.get(i).listen();
+            window.getCells().get(i).setValue(this.sudokuArray[i]);
+            window.getCells().get(i).setCorrectValue(this.solutionArray[i]);
 
 
         }
 
+        window.checkDifficulty();
+
+        for (int i = 0; i<81;i++){
+
+            window.getCells().get(i).listen();
+
+        }
+
         window.checkSudoku(this.solutionArray);
-        window.solutionArray = this.solutionArray;
+        window.setSolutionArray(this.solutionArray);
         window.startTimer(window.getTimeLimit());
 
     }
@@ -68,7 +72,7 @@ public class SudokuFetcher extends SwingWorker<Void,Void> {
 
         try {
 
-            if (requestAmount > 10){
+            if (requestAmount > 5){
 
                 throw new IOException("The desired sudoku level was not found");
 
@@ -104,7 +108,7 @@ public class SudokuFetcher extends SwingWorker<Void,Void> {
 
                 System.out.println(sudokuData.get("difficulty"));
 
-                if (!sudokuData.get("difficulty").equals(this.difficulty)){
+                if (!sudokuData.get("difficulty").equals("Hard")){
 
                     this.requestAmount++;
                     getSudoku();

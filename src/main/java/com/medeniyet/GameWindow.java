@@ -11,33 +11,33 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Random;
 
 
-public class GameWindow extends JFrame implements ActionListener {
+public class GameWindow extends JFrame implements ActionListener, Serializable {
 
-    JButton backButton;
-    MenuWindow menuWindow;
-    String difficulty;
-    int[] sudokuArray = new int[81];
-    int[] solutionArray = new int[81];
-    ArrayList<Cell> cells = new ArrayList<Cell>();
-    int mistakes = 0;
-    JLabel mistakeLabel;
-    JLabel timeLabel;
-    Cell focusedCell;
-    JButton eraseButton;
-    Timer timer;
-    ImageIcon sudokuIcon;
-
-    int elapsedSeconds;
+    private JButton backButton;
+    private MenuWindow menuWindow;
+    private String difficulty;
+    private int[] sudokuArray = new int[81];
+    private int[] solutionArray = new int[81];
+    private ArrayList<Cell> cells = new ArrayList<Cell>();
+    private int mistakes = 0;
+    private JLabel mistakeLabel;
+    private JLabel timeLabel;
+    private Cell focusedCell;
+    private JButton eraseButton;
+    private Timer timer;
+    private int elapsedSeconds;
 
     GameWindow(MenuWindow previousWindow,int level){
 
         super();
         getLevel(level);
         this.setTitle("Medeniyet Sudoku");
-        sudokuIcon = new ImageIcon("images/favicon.png");
+        ImageIcon sudokuIcon = new ImageIcon("images/favicon.png");
         this.setIconImage(sudokuIcon.getImage());
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(900,600);
@@ -112,7 +112,7 @@ public class GameWindow extends JFrame implements ActionListener {
         }
 
 
-        //Top-right area
+        //Üst sağ bölge
 
         JPanel subPanel = new JPanel(new MigLayout("wrap, insets 0 ,fill ",
                 "[][][]",
@@ -142,12 +142,12 @@ public class GameWindow extends JFrame implements ActionListener {
         subPanel.add(mistakeCount, "span 2 1");
         subPanel.add(timeCount,"span 2 1");
 
-        //Numbers keyboard
+        //Sayı klavyesi
         JPanel keyboard = new JPanel(new MigLayout("wrap,insets 0, gapx 7, gapy 7",
                 "[][][]",
                 "[][][]"));
 
-        //Adding the numbers one by one
+        //Sayıları teker teker ekleme
         for (int i = 1;i<=9;i++){
 
             JButton numberButton = new JButton(Integer.toString(i));
@@ -176,7 +176,7 @@ public class GameWindow extends JFrame implements ActionListener {
         backButton.addActionListener(this);
         this.backButton = backButton;
 
-                //column row width height
+                //sütün satır genişlik yükseklik
         this.add(subPanel,"growx,height 120::,cell 3 0 2 3");
         this.add(sudoku,"width 460px,height 460px,cell 0 1 3 6, align center");
         this.add(keyboard,"width 220!,height 220!,cell 3 3 2 3, align center,gaptop 35px, gapright 35px");
@@ -215,6 +215,78 @@ public class GameWindow extends JFrame implements ActionListener {
 
     }
 
+    public void checkDifficulty(){
+
+        switch (this.difficulty) {
+
+            case "Easy":
+
+                this.adjustLevel(40);
+
+                break;
+
+            case "Medium":
+
+                this.adjustLevel(36);
+
+                break;
+            case "Hard":
+
+                this.adjustLevel(30);
+
+                break;
+
+            default:
+
+                this.adjustLevel(38);
+
+        }
+    }
+
+    public void revealRandomCell(){
+
+        Random random = new Random();
+        int index  = random.nextInt(81);
+
+        if (this.cells.get(index).getValue() == 0){
+
+            this.cells.get(index).setValue(this.cells.get(index).getCorrectValue());
+
+        }else{
+
+            revealRandomCell();
+
+        }
+
+
+    }
+
+    public void adjustLevel(int desiredAmount){
+
+        int openCells = 0;
+
+        for (int i = 0; i < 81; i++) {
+
+            if(this.cells.get(i).getValue() != 0){
+
+                openCells++;
+
+            }
+
+        }
+
+        while (openCells < desiredAmount){
+
+            this.revealRandomCell();
+
+            openCells++;
+
+
+        }
+
+    }
+
+
     public void checkSudoku(int[] solution){
 
         int correct = 0;
@@ -222,6 +294,7 @@ public class GameWindow extends JFrame implements ActionListener {
         for (int i = 0; i < 81; i++) {
 
             if(this.cells.get(i).getValue() == solution[i]){
+
 
                 this.cells.get(i).blockCell();
                 correct++;
@@ -236,7 +309,7 @@ public class GameWindow extends JFrame implements ActionListener {
             int minutes = this.elapsedSeconds/60;
             int seconds = this.elapsedSeconds%60;
 
-            CustomDialog dialog = new CustomDialog(this,"Tebrikler, "+minutes+":"+seconds+" içinde bitirdiniz", "Tamam", new MyCallback() {
+            CustomDialog dialog = new CustomDialog(this,"Tebrikler, "+minutes+" dakika "+seconds+" saniye içinde bitirdiniz", "Tamam", new MyCallback() {
 
                 @Override
                 public void run() {
@@ -252,6 +325,30 @@ public class GameWindow extends JFrame implements ActionListener {
             dialog.setVisible(true);
 
         }
+
+    }
+
+    public void setFocusedCell(Cell focused){
+
+        this.focusedCell = focused;
+
+    }
+
+    public int[] getSolutionArray(){
+
+        return this.solutionArray;
+
+    }
+
+    public void setSolutionArray(int[] array){
+
+        this.solutionArray = array;
+
+    }
+
+    public ArrayList<Cell> getCells(){
+
+        return this.cells;
 
     }
 

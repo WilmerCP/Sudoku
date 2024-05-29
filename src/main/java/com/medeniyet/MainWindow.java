@@ -9,8 +9,9 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
-public class MainWindow extends JFrame implements ActionListener{
+public class MainWindow extends JFrame implements ActionListener, Serializable {
 
     private JButton logButton;
     private JTextField nameBox;
@@ -87,9 +88,8 @@ public class MainWindow extends JFrame implements ActionListener{
         this.add(logButton);
         this.add(Box.createVerticalGlue());
 
-
-
-
+        //Enter tuşuyla giris yapmayı sağlar
+        this.getRootPane().setDefaultButton(logButton);
 
 
     }

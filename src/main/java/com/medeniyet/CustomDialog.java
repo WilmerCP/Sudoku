@@ -7,12 +7,13 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.util.EventListener;
 
-public class CustomDialog extends JDialog {
+public class CustomDialog extends JDialog implements Serializable {
 
-    JButton button;
-     MyCallback callbackObj;
+    private JButton button;
+    private MyCallback callbackObj;
 
 
     CustomDialog(JFrame parent,String message,String buttonText,MyCallback obj){

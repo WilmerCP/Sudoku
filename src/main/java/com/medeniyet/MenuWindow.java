@@ -8,20 +8,20 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 
-public class MenuWindow extends JFrame implements ActionListener {
+public class MenuWindow extends JFrame implements ActionListener, Serializable {
 
-    JButton backButton;
-    JButton easyButton;
-    JButton mediumButton;
-    JButton hardButton;
-    ImageIcon sudokuIcon;
+    private JButton backButton;
+    private JButton easyButton;
+    private JButton mediumButton;
+    private JButton hardButton;
 
     MenuWindow(String name){
 
         super();
         this.setTitle("Medeniyet Sudoku");
-        sudokuIcon = new ImageIcon("images/favicon.png");
+        ImageIcon sudokuIcon = new ImageIcon("images/favicon.png");
         this.setIconImage(sudokuIcon.getImage());
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(800,500);

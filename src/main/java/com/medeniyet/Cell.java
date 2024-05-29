@@ -10,12 +10,14 @@ import javax.swing.text.DocumentFilter;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class Cell extends JTextField {
+public class Cell extends JTextField implements Serializable {
 
     private int correctValue;
-    GameWindow window;
+    private GameWindow window;
 
     Cell(GameWindow window){
 
@@ -30,7 +32,7 @@ public class Cell extends JTextField {
         this.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                window.focusedCell = Cell.this;
+                window.setFocusedCell(Cell.this);
             }
 
             @Override
@@ -109,12 +111,19 @@ public class Cell extends JTextField {
 
     }
 
+    public int getCorrectValue(){
+
+        return this.correctValue;
+
+    }
+
     public void checkCell(){
 
         if (this.getValue() == this.correctValue){
 
             this.blockCell();
-            this.window.checkSudoku(window.solutionArray);
+            this.window.checkSudoku(window.getSolutionArray());
+
 
         }else if(!this.getText().isEmpty()){
 

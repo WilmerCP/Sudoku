@@ -187,20 +187,20 @@ public class SudokuFetcher extends SwingWorker<Void,Void> implements Serializabl
 
         try {
 
-            File file = new File(
-                    "localdata/" + this.difficulty + ".txt");
+            InputStream inputStream = SudokuFetcher.class.getResourceAsStream("/localdata/" + this.difficulty + ".txt");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-
-            String text;
-            String buffer = "";
-            while ((text = reader.readLine()) != null) {
-
-                buffer = buffer + text;
+            StringBuilder buffer = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                buffer.append(line);
             }
+            reader.close();
+
+            String text = buffer.toString();
 
             Gson gson = new Gson();
-            JsonArray jsonArray = gson.fromJson(buffer, JsonArray.class);
+            JsonArray jsonArray = gson.fromJson(text, JsonArray.class);
 
             Random random = new Random();
             int index  = random.nextInt(jsonArray.size());

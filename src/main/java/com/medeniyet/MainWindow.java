@@ -10,17 +10,19 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.URL;
+import java.util.Arrays;
 
 public class MainWindow extends JFrame implements ActionListener, Serializable {
 
     private JButton logButton;
     private JTextField nameBox;
 
-    MainWindow(){
+    MainWindow() {
 
         super();
         this.setTitle("Medeniyet Sudoku");
-        ImageIcon sudokuIcon = new ImageIcon("images/favicon.png");
+        ImageIcon sudokuIcon = new ImageIcon(MainWindow.class.getResource("/images/favicon.png"));
         this.setIconImage(sudokuIcon.getImage());
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(800,500);
@@ -33,7 +35,8 @@ public class MainWindow extends JFrame implements ActionListener, Serializable {
 
         try {
 
-            BufferedImage originalImage = ImageIO.read(new File("images/logo.png"));
+            URL imageUrl = MainWindow.class.getResource("/images/logo.png");
+            BufferedImage originalImage = ImageIO.read(imageUrl);
             Image scaledImage = originalImage.getScaledInstance(250, 180, Image.SCALE_SMOOTH);
             ImageIcon logo = new ImageIcon(scaledImage);
             title = new JLabel(logo);

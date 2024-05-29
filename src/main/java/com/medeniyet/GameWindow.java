@@ -37,7 +37,7 @@ public class GameWindow extends JFrame implements ActionListener, Serializable {
         super();
         getLevel(level);
         this.setTitle("Medeniyet Sudoku");
-        ImageIcon sudokuIcon = new ImageIcon("images/favicon.png");
+        ImageIcon sudokuIcon = new ImageIcon(MainWindow.class.getResource("/images/favicon.png"));
         this.setIconImage(sudokuIcon.getImage());
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(900,600);
@@ -118,7 +118,7 @@ public class GameWindow extends JFrame implements ActionListener, Serializable {
                 "[][][]",
                 "[][][]"));
 
-        ImageIcon eraser = new ImageIcon("images/silgi.png");
+        ImageIcon eraser = new ImageIcon(GameWindow.class.getResource("/images/silgi.png"));
         Image scaledImage = eraser.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
         eraser = new ImageIcon(scaledImage);
         JButton eraseButton = new JButton(eraser);

@@ -21,7 +21,7 @@ public class MenuWindow extends JFrame implements ActionListener, Serializable {
 
         super();
         this.setTitle("Medeniyet Sudoku");
-        ImageIcon sudokuIcon = new ImageIcon("images/favicon.png");
+        ImageIcon sudokuIcon = new ImageIcon(MainWindow.class.getResource("/images/favicon.png"));
         this.setIconImage(sudokuIcon.getImage());
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(800,500);

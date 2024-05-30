@@ -106,7 +106,7 @@ public class SudokuFetcher extends SwingWorker<Void,Void> implements Serializabl
 
                 Map<String,Object> sudokuData = (Map<String, Object>) array.get(0);
 
-                System.out.println(sudokuData.get("difficulty"));
+                //System.out.println(sudokuData.get("difficulty"));
 
                 if (!sudokuData.get("difficulty").equals("Hard")){
 
@@ -130,7 +130,7 @@ public class SudokuFetcher extends SwingWorker<Void,Void> implements Serializabl
 
         }catch (IOException e){
 
-            System.out.println("There was an error while requesting a new sudoku from the API");
+            System.out.println("There was an error while requesting a new sudoku from the API, a new sudoku will be retrieved from local data");
             this.getLocalSudoku();
 
 

@@ -19,6 +19,18 @@ public class Cell extends JTextField implements Serializable {
     private int correctValue;
     private GameWindow window;
 
+    Cell(){
+
+        super();
+        this.setInputValidation();
+        this.setHorizontalAlignment(JTextField.CENTER);
+        this.setAlignmentY(JTextField.CENTER);
+        this.setBorder(null);
+        this.setPreferredSize(new Dimension(60,60));
+        this.setFont(new Font("Arial",Font.BOLD,16));
+
+    }
+
     Cell(GameWindow window){
 
         super();
@@ -28,6 +40,12 @@ public class Cell extends JTextField implements Serializable {
         this.setBorder(null);
         this.setPreferredSize(new Dimension(60,60));
         this.setFont(new Font("Arial",Font.BOLD,16));
+        this.setParent(window);
+
+    }
+
+    public void setParent(GameWindow window){
+
         this.window = window;
         this.addFocusListener(new FocusListener() {
             @Override

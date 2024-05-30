@@ -82,7 +82,8 @@ public class GameWindow extends JFrame implements ActionListener, Serializable {
 
         while(counter<81){
 
-            Cell cellObj = new Cell(this);
+            Cell cellObj = new Cell();
+            cellObj.setParent(this);
             cells.add(cellObj);
 
             sectors.get(xsectorCounter +(ySectorCounter*3) ).add(cellObj,"grow, push");

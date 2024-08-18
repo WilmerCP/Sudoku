@@ -383,6 +383,7 @@ public class GameWindow extends JFrame implements ActionListener, Serializable {
 
         });
 
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         dialog.setVisible(true);
 
     }

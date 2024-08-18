@@ -2,6 +2,12 @@
 
 This is a Sudoku game application built using Java Swing. The application allows users to play Sudoku with different difficulty levels.
 
+<img src="https://github.com/WilmerCP/Sudoku/blob/f77e1d1b6d1857d2efaffcd0ca1b2c312c759f06/mainWindow.png" width="480">
+
+<img src="https://github.com/WilmerCP/Sudoku/blob/f77e1d1b6d1857d2efaffcd0ca1b2c312c759f06/menu.png" width="480">
+
+<img src="https://github.com/WilmerCP/Sudoku/blob/f77e1d1b6d1857d2efaffcd0ca1b2c312c759f06/screenshot.png" width="480">
+
 ## Getting Started
 
 ### Prerequisites
